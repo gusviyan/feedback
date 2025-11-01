@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
 $user = "root"; 
-$pass = "";     
-$db   = "feedback";
+$pass = "root";     
+$db   = "db_feedback";
 ?>

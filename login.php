@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = md5($_POST['password']); // untuk demo, gunakan password_hash di real case
 
-    $result = $conn->query("SELECT * FROM admins WHERE username='$username' AND password='$password'");
+    $result = $conn->query("SELECT * FROM admin WHERE username='$username' AND password='$password'");
 
     if ($result->num_rows > 0) {
         $_SESSION['admin_logged_in'] = true;

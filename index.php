@@ -74,85 +74,7 @@ $selectedDoctor = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : "";
     <meta charset="UTF-8">
     <title>Survey Kepuasan Dokter</title>
     <link rel="stylesheet" href="assets/style.css">
- <style>
-/* Spesialis dokter */
-.doctor-specialist {
-    font-size: 16px;
-    font-weight: 500;
-    color: #555;
-    margin-top: 3px;      /* lebih rapat dengan nama dokter */
-    margin-bottom: 10px;  /* jarak ke bawah lebih kecil */
-}
-
-/* Box pilihan dokter */
-.doctor-select-box { 
-    width: 100%; 
-    text-align: center;
-    margin-bottom: 10px; 
-}
-
-.doctor-select-box select {
-    padding: 6px 10px; 
-    font-size: 15px; 
-    border-radius: 6px; 
-    border: 1px solid #ccc; 
-    width: 250px; 
-}
-
-/* Box info dokter */
-.doctor-box {
-    display: none; 
-    flex-direction: column; 
-    align-items: center; 
-    margin: 15px auto;   /* diperkecil jarak atas-bawah */
-    text-align: center; 
-}
-
-.doctor-photo {
-    width: 100%; 
-    max-width: 260px; 
-    height: auto; 
-    border-radius: 12px; 
-    object-fit: cover; 
-    border: 3px solid #ccc; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
-    margin-bottom: 10px; 
-}
-
-.doctor-name {
-    font-size: 20px; 
-    font-weight: 600; 
-    color: #222; 
-    margin-bottom: 4px;   /* rapat dengan spesialis */
-}
-
-/* Smiley group */
-.smiley-group {
-    display: none; 
-    justify-content: center; 
-    gap: 35px; 
-    margin: 12px 0;   /* jarak lebih kecil ke atas (spesialis) */
-}
-
-.smiley {
-    font-size: 70px;  /* sedikit lebih kecil agar lebih pas */
-    cursor: pointer; 
-    transition: transform 0.2s, opacity 0.2s; 
-}
-
-.smiley.like { 
-    color: #28a745; 
-}
-
-.smiley.dislike { 
-    color: #dc3545; 
-}
-
-.smiley:hover { 
-    transform: scale(1.15); 
-    opacity: 0.85; 
-}
-</style>
+ 
 
     <script>
 function tampilFoto() {
@@ -216,20 +138,30 @@ window.onload = function() {
 <div class="container">
     <form method="POST">
         <!-- Pilih Dokter -->
-        <div class="doctor-select-box">
-            <select name="doctor_id" id="doctorSelect" onchange="tampilFoto()" required>
-                <option value="">-- Dokter --</option>
-                <?php while($row = $dokter->fetch_assoc()): ?>
-                    <option value="<?= $row['id'] ?>" 
-                            data-foto="<?= $row['foto'] ?>" 
-                            data-nama="<?= htmlspecialchars($row['nama_dokter']) ?>"
-                            data-spesialis="<?= htmlspecialchars($row['nama_spesialis']) ?>"
-                            <?= ($selectedDoctor == $row['id']) ? "selected" : "" ?>>
-                        <?= htmlspecialchars($row['nama_dokter']) ?>
-                    </option>
-                <?php endwhile; ?>
-            </select>
+<div class="container">
+    <form method="POST">
+        <!-- Pilih Dokter -->
+        <div class="doctor-select-wrapper">
+            <label for="doctorSelect" class="doctor-select-label">Dokter Praktek</label>
+
+            <div class="doctor-select-box">
+                <select name="doctor_id" id="doctorSelect" onchange="tampilFoto()" required>
+                    <option value="">-- Dokter --</option>
+                    <?php while($row = $dokter->fetch_assoc()): ?>
+                        <option value="<?= $row['id'] ?>" 
+                                data-foto="<?= $row['foto'] ?>" 
+                                data-nama="<?= htmlspecialchars($row['nama_dokter']) ?>"
+                                data-spesialis="<?= htmlspecialchars($row['nama_spesialis']) ?>"
+                                <?= ($selectedDoctor == $row['id']) ? "selected" : "" ?>>
+                            <?= htmlspecialchars($row['nama_dokter']) ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
         </div>
+    </form>
+</div>
+
 
         <!-- Foto + Nama Dokter + Spesialis -->
         <div class="doctor-box" id="doctorBox">
@@ -240,9 +172,15 @@ window.onload = function() {
 
         <!-- Smiley -->
         <div class="smiley-group">
-            <div class="smiley like" onclick="showOptions('like')">😊</div>
-            <div class="smiley dislike" onclick="showOptions('dislike')">😞</div>
-        </div>
+    <div class="smiley-card" onclick="selectSmiley('like')">
+        <div class="smiley like">😊</div>
+        <div class="smiley-label"></div>
+    </div>
+    <div class="smiley-card" onclick="selectSmiley('dislike')">
+        <div class="smiley dislike">☹️</div>
+        <div class="smiley-label"></div>
+    </div>
+</div>
 
         <!-- Form Feedback -->
         <div id="feedbackForm" style="display:none;" class="feedback-card">

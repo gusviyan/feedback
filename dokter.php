@@ -81,13 +81,12 @@ if (isset($_GET['delete'])) {
 
 <div class="main-content">
 
-    <!-- Form tambah dokter -->
+    <!-- === Form Tambah Dokter === -->
     <div class="card">
+        <h2 style="margin-bottom:15px;">Tambah Dokter</h2>
         <form method="POST" enctype="multipart/form-data">
-            <h3>Tambah Dokter</h3>
             <input type="text" name="nama_dokter" placeholder="Nama Dokter" required>
 
-            <!-- Dropdown Spesialis -->
             <select name="spesialis_id" required>
                 <option value="">-- Pilih Spesialis --</option>
                 <?php
@@ -99,13 +98,13 @@ if (isset($_GET['delete'])) {
             </select>
 
             <input type="file" name="foto" accept="image/*">
-            <button type="submit" name="add_doctor" class="btn btn-primary">Tambah</button>
+            <button type="submit" name="add_doctor" class="btn btn-primary">+ Tambah Dokter</button>
         </form>
     </div>
 
-    <!-- Filter & Search -->
+    <!-- === Filter & Search === -->
     <div class="card">
-        <form method="GET" class="filter-form">
+        <form method="GET" class="filter-form" style="display:flex; gap:10px; flex-wrap:wrap;">
             <select name="spesialis_id">
                 <option value="">-- Semua Spesialis --</option>
                 <?php
@@ -117,71 +116,80 @@ if (isset($_GET['delete'])) {
                     </option>
                 <?php endwhile; ?>
             </select>
+
             <input type="text" name="search" placeholder="Cari nama dokter..." value="<?= htmlspecialchars($search) ?>">
+
             <button type="submit" class="btn btn-primary">Filter</button>
-            <a href="admin.php" class="btn btn-warning">Reset</a>
+            <a href="admin.php" class="btn btn-danger" style="text-decoration:none;">Reset</a>
         </form>
     </div>
 
-    <!-- Tabel dokter -->
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Nama Dokter</th>
-            <th>Spesialis</th>
-            <th>Foto</th>
-            <th>Aksi</th>
-        </tr>
-        <?php
-        $sql = "SELECT d.*, s.nama_spesialis 
-                FROM doctors d 
-                LEFT JOIN spesialis s ON d.spesialis_id=s.id 
-                WHERE 1=1";
+    <!-- === Tabel Dokter === -->
+    <div class="card">
+        <h2 style="margin-bottom:10px;">Daftar Dokter</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nama Dokter</th>
+                <th>Spesialis</th>
+                <th>Foto</th>
+                <th>Aksi</th>
+            </tr>
+            <?php
+            $sql = "SELECT d.*, s.nama_spesialis 
+                    FROM doctors d 
+                    LEFT JOIN spesialis s ON d.spesialis_id=s.id 
+                    WHERE 1=1";
 
-        if ($filter_spesialis) {
-            $sql .= " AND d.spesialis_id=" . intval($filter_spesialis);
-        }
-        if ($search) {
-            $sql .= " AND d.nama_dokter LIKE '%" . $conn->real_escape_string($search) . "%'";
-        }
+            if ($filter_spesialis) {
+                $sql .= " AND d.spesialis_id=" . intval($filter_spesialis);
+            }
+            if ($search) {
+                $sql .= " AND d.nama_dokter LIKE '%" . $conn->real_escape_string($search) . "%'";
+            }
 
-        $sql .= " ORDER BY d.id DESC";
+            $sql .= " ORDER BY d.id DESC";
+            $result = $conn->query($sql);
 
-        $result = $conn->query($sql);
-        while ($row = $result->fetch_assoc()):
-        ?>
-        <tr>
-            <td><?= $row['id'] ?></td>
-            <td><?= htmlspecialchars($row['nama_dokter']) ?></td>
-            <td><?= htmlspecialchars($row['nama_spesialis']) ?></td>
-            <td>
-                <?php if ($row['foto']): ?>
-                    <img src="uploads/<?= $row['foto'] ?>" alt="Foto Dokter" class="doctor-thumb">
-                <?php else: ?>
-                    <span style="color:#888;">Tidak ada foto</span>
-                <?php endif; ?>
-            </td>
-            <td>
-                <button class="btn btn-warning"
-                    onclick="openEditModal(
-                        <?= $row['id'] ?>, 
-                        '<?= htmlspecialchars($row['nama_dokter'], ENT_QUOTES) ?>',
-                        <?= $row['spesialis_id'] ?>
-                    )">Edit</button>
-                <a href="?delete=<?= $row['id'] ?>" onclick="return confirm('Yakin hapus dokter ini?')" class="btn btn-danger">Hapus</a>
-            </td>
-        </tr>
-        <?php endwhile; ?>
-    </table>
+            if ($result->num_rows > 0):
+                while ($row = $result->fetch_assoc()):
+            ?>
+            <tr>
+                <td><?= $row['id'] ?></td>
+                <td><?= htmlspecialchars($row['nama_dokter']) ?></td>
+                <td><?= htmlspecialchars($row['nama_spesialis']) ?></td>
+                <td>
+                    <?php if ($row['foto']): ?>
+                        <img src="uploads/<?= $row['foto'] ?>" alt="Foto Dokter" class="doctor-photo">
+                    <?php else: ?>
+                        <span style="color:#aaa;">Tidak ada foto</span>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <button class="btn btn-primary"
+                        onclick="openEditModal(
+                            <?= $row['id'] ?>, 
+                            '<?= htmlspecialchars($row['nama_dokter'], ENT_QUOTES) ?>',
+                            <?= $row['spesialis_id'] ?>
+                        )">Edit</button>
+                    <a href="?delete=<?= $row['id'] ?>" class="btn btn-danger" onclick="return confirm('Yakin hapus dokter ini?')">Hapus</a>
+                </td>
+            </tr>
+            <?php endwhile; else: ?>
+            <tr><td colspan="5">Belum ada data dokter.</td></tr>
+            <?php endif; ?>
+        </table>
+    </div>
 </div>
 
-<!-- Modal Edit Dokter -->
-<div id="editModal" class="modal" style="display:none;">
+<!-- === Modal Edit Dokter === -->
+<div id="editModal" class="modal">
     <div class="modal-content">
-        <div class="modal-header">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
             <h3>Edit Dokter</h3>
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" style="cursor:pointer; font-size:22px;" onclick="closeModal()">&times;</span>
         </div>
+
         <form method="POST" enctype="multipart/form-data">
             <input type="hidden" name="id" id="edit_id">
 
@@ -201,7 +209,7 @@ if (isset($_GET['delete'])) {
             <label>Foto (kosongkan jika tidak diganti)</label>
             <input type="file" name="foto" accept="image/*">
 
-            <button type="submit" name="edit_doctor" class="btn btn-success">Simpan</button>
+            <button type="submit" name="edit_doctor" class="btn btn-primary" style="margin-top:10px;">Simpan Perubahan</button>
         </form>
     </div>
 </div>
@@ -213,16 +221,16 @@ function openEditModal(id, nama, spesialisId) {
 
     let spesialisSelect = document.getElementById('edit_spesialis');
     for (let i = 0; i < spesialisSelect.options.length; i++) {
-        if (spesialisSelect.options[i].value == spesialisId) {
-            spesialisSelect.options[i].selected = true;
-        }
+        spesialisSelect.options[i].selected = (spesialisSelect.options[i].value == spesialisId);
     }
 
     document.getElementById('editModal').style.display = 'flex';
 }
+
 function closeModal() {
     document.getElementById('editModal').style.display = 'none';
 }
+
 window.onclick = function(event) {
     let modal = document.getElementById('editModal');
     if (event.target == modal) {
@@ -230,6 +238,7 @@ window.onclick = function(event) {
     }
 }
 </script>
+
 <?php include 'footer.php'; ?>
 </body>
 </html>
