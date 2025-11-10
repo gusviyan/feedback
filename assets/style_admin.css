@@ -64,8 +64,8 @@ body {
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 20px 15px;
+    justify-content: top;
+    padding: 50px 15px;
 }
 
 .sidebar a {
@@ -126,7 +126,7 @@ textarea {
     border-radius: 8px;
     padding: 10px 12px;
     font-size: 14px;
-    width: 100%;
+    width: auto;
     transition: all 0.25s;
     appearance: none;
 }
@@ -136,11 +136,25 @@ select {
 }
 
 option {
-    color: #000;
-    background: #fff;
+    color: #000000;
+    background-color: rgba(255, 255, 255, 0.26);
 }
 
-input::placeholder, textarea::placeholder {
+/* placeholder color with vendor fallbacks */
+input::placeholder,
+textarea::placeholder {
+    color: #ccc;
+}
+
+/* WebKit legacy */
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+/* Microsoft legacy */
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
     color: #ccc;
 }
 
@@ -152,22 +166,57 @@ input:focus, textarea:focus, select:focus {
 
 /* ====== Buttons ====== */
 .btn {
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 8px;
     cursor: pointer;
     padding: 8px 14px;
     font-size: 14px;
     font-weight: 500;
-    transition: 0.25s;
+    transition: transform 0.18s, background 0.18s, border-color 0.18s, box-shadow 0.18s;
     color: #fff;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
     backdrop-filter: blur(8px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-.btn-primary { background: rgba(245, 132, 54, 0.7); }
-.btn-primary:hover { background: rgba(245, 132, 54, 0.9); }
+/* Neutral glass variants (no hue, only subtle contrast differences) */
+.btn-primary {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.36);
+}
+.btn-danger {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.34);
+}
+.btn-warning {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border-color: rgba(255,255,255,0.10);
+    box-shadow: 0 7px 18px rgba(0,0,0,0.35);
+}
 
-.btn-danger { background: rgba(220, 53, 69, 0.7); }
-.btn-danger:hover { background: rgba(220, 53, 69, 0.9); }
+/* Hover / interaction */
+.btn:hover,
+.btn-primary:hover,
+.btn-danger:hover,
+.btn-warning:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.38);
+}
+
+/* Focus / active tweaks for accessibility */
+.btn:focus {
+    outline: 2px solid rgba(255,255,255,0.06);
+    outline-offset: 2px;
+}
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.28) inset;
+}
 
 /* ====== Table ====== */
 table {
@@ -182,8 +231,9 @@ table {
 th, td {
     padding: 10px 12px;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     color: #fff;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -204,13 +254,21 @@ th {
 
 /* ====== Footer ====== */
 .site-footer {
+    position: fixed;
+    left: 240px; /* align with .main-content */
+    right: 0;
+    bottom: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
-    text-align: center;
     padding: 10px 15px;
     font-size: 13px;
     color: #fff;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 90;
 }
 
 /* ====== Modal ====== */

@@ -138,9 +138,6 @@ window.onload = function() {
 <div class="container">
     <form method="POST">
         <!-- Pilih Dokter -->
-<div class="container">
-    <form method="POST">
-        <!-- Pilih Dokter -->
         <div class="doctor-select-wrapper">
             <label for="doctorSelect" class="doctor-select-label">Dokter Praktek</label>
 
@@ -159,8 +156,6 @@ window.onload = function() {
                 </select>
             </div>
         </div>
-    </form>
-</div>
 
 
         <!-- Foto + Nama Dokter + Spesialis -->
@@ -172,11 +167,11 @@ window.onload = function() {
 
         <!-- Smiley -->
         <div class="smiley-group">
-    <div class="smiley-card" onclick="selectSmiley('like')">
+    <div class="smiley-card" onclick="showOptions('like')">
         <div class="smiley like">😊</div>
         <div class="smiley-label"></div>
     </div>
-    <div class="smiley-card" onclick="selectSmiley('dislike')">
+    <div class="smiley-card" onclick="showOptions('dislike')">
         <div class="smiley dislike">☹️</div>
         <div class="smiley-label"></div>
     </div>

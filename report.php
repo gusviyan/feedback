@@ -20,14 +20,17 @@ $result = $conn->query("
 <head>
     <meta charset="UTF-8">
     <title>Laporan Penilaian Dokter</title>
-    <style>
+    <link rel="stylesheet" href="assets/style_admin.css">
+    <!-- <style>
+        /* fallback styles if stye_admin.css is missing */
         body { font-family: Arial, sans-serif; background: #111; color: #eee; }
         table { width: 90%; margin: 20px auto; border-collapse: collapse; background: #222; }
         th, td { padding: 10px; border: 1px solid #555; text-align: center; }
         th { background: #333; }
-    </style>
+    </style> -->
 </head>
 <body>
+    <?php include 'sidebar.php'; ?>
     <h2 style="text-align:center;">Laporan Kepuasan Dokter</h2>
     <table>
         <tr>

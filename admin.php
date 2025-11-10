@@ -98,7 +98,7 @@ $percent_dislike = $total_all > 0 ? round(($total_dislike / $total_all) * 100) :
             margin: 20px auto;
         }
         .summary-card {
-            background: #fff;
+            background: #ffffff2c;
             padding: 15px 25px;
             border-radius: 10px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -123,7 +123,7 @@ $percent_dislike = $total_all > 0 ? round(($total_dislike / $total_all) * 100) :
             width: 80%;
             max-width: 600px;
             margin: 20px auto;
-            background: #eee;
+            background: #eeeeee21;
             border-radius: 20px;
             overflow: hidden;
             height: 25px;
@@ -149,7 +149,7 @@ $percent_dislike = $total_all > 0 ? round(($total_dislike / $total_all) * 100) :
             width: 95%;
             max-width: 1000px;
             margin: 30px auto;
-            background: #fff;
+            background: #ffffff59;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
@@ -210,8 +210,8 @@ $percent_dislike = $total_all > 0 ? round(($total_dislike / $total_all) * 100) :
 </div>
 
 <!-- Tombol Export -->
-<div class="filter-box" style="margin-top:10px;">
-    <a href="export_excel.php?start_date=<?= $start_date ?>&end_date=<?= $end_date ?>&spesialis_id=<?= $spesialis_id ?>" 
+<!-- <div class="filter-box" style="margin-top:10px;"> -->
+    <a href="export.php?start_date=<?= $start_date ?>&end_date=<?= $end_date ?>&spesialis_id=<?= $spesialis_id ?>" 
        class="btn btn-success">Export Excel</a>
 
     <a href="export_pdf.php?start_date=<?= $start_date ?>&end_date=<?= $end_date ?>&spesialis_id=<?= $spesialis_id ?>" 

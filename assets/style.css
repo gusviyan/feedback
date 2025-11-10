@@ -107,27 +107,58 @@ h3 {
 
 /* ====== Buttons ====== */
 .btn {
-    padding: 10px 18px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 8px;
     cursor: pointer;
+    padding: 8px 14px;
     font-size: 14px;
-    transition: all 0.25s ease;
+    font-weight: 500;
+    transition: transform 0.18s, background 0.18s, border-color 0.18s, box-shadow 0.18s;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
     backdrop-filter: blur(8px);
-    box-shadow: 0 4px 15px rgba(255,255,255,0.15);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-.btn-primary { background: rgba(66, 63, 144, 0.7); color: #fff; }
-.btn-primary:hover { background: rgba(66, 63, 144, 0.9); transform: translateY(-2px); }
+/* Neutral glass variants (no hue, only subtle contrast differences) */
+.btn-primary {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.36);
+}
+.btn-danger {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.34);
+}
+.btn-warning {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border-color: rgba(255,255,255,0.10);
+    box-shadow: 0 7px 18px rgba(0,0,0,0.35);
+}
 
-.btn-edit { background: rgba(40, 167, 69, 0.7); color: #fff; }
-.btn-edit:hover { background: rgba(40, 167, 69, 0.9); transform: translateY(-2px); }
+/* Hover / interaction */
+.btn:hover,
+.btn-primary:hover,
+.btn-danger:hover,
+.btn-warning:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.38);
+}
 
-.btn-warning { background: rgba(255, 193, 7, 0.7); color: #212529; }
-.btn-warning:hover { background: rgba(255, 193, 7, 0.9); transform: translateY(-2px); }
+/* Focus / active tweaks for accessibility */
+.btn:focus {
+    outline: 2px solid rgba(255,255,255,0.06);
+    outline-offset: 2px;
+}
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.28) inset;
+}
 
-.btn-danger { background: rgba(220, 53, 69, 0.7); color: #fff; }
-.btn-danger:hover { background: rgba(220, 53, 69, 0.9); transform: translateY(-2px); }
 
 /* ====== Card Box ====== */
 .card {
